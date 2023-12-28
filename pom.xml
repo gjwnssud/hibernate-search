@@ -98,6 +98,19 @@
             <artifactId>spring-boot-parameter-store-integration</artifactId>
             <version>1.5.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.ua-parser</groupId>
+            <artifactId>uap-java</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.2.220</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -128,6 +141,37 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/resources-${env}</directory>
+            </resource>
+        </resources>
     </build>
 
+    <profiles>
+        <!-- Local Profile -->
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <env>local</env>
+                <executable>true</executable>
+                <spring.profiles.active>local</spring.profiles.active>
+            </properties>
+        </profile>
+        <!-- Dev Profile -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+                <executable>true</executable>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
 </project>
