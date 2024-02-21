@@ -10,11 +10,11 @@ import lombok.Getter;
  */
 @Getter
 public enum Status {
-	OK (200, "Success")
-	, BAD_REQUEST (400, "Bad request")
-	, NOT_FOUND (404, "Page not found")
-	, INTERNAL_SERVER_ERROR (404, "Internal server error")
-	, FAIL (9999, "Fail")
+	OK (200, "success.")
+	, BAD_REQUEST (400, "bad request.")
+	, NOT_FOUND (404, "not found.")
+	, INTERNAL_SERVER_ERROR (500, "internal server error.")
+	, FAIL (9999, "fail.")
 	;
 
 	private final int code;

@@ -21,7 +21,7 @@ public class SearchService {
 	private final SearchRepository searchRepository;
 
 	public Page<TbcmCmtyNttInfoEntity> search (String keyword, Pageable pageable) {
-		List<TbcmCmtyNttInfoEntity> cmtyNttInfoEntityList = searchRepository.findTbcmCmtyNttInfoEntitiesByNttCnContainingIgnoreCaseOrNttSjContainingIgnoreCaseOrderByCmtyNttSnDesc (
+		List<TbcmCmtyNttInfoEntity> cmtyNttInfoEntityList = searchRepository.findTbcmCmtyNttInfoEntitiesByNttCnContainingIgnoreCaseOrNttSjContainingIgnoreCase (
 				keyword, keyword, pageable);
 		return new PageImpl<> (cmtyNttInfoEntityList, pageable, cmtyNttInfoEntityList.size ());
 	}
