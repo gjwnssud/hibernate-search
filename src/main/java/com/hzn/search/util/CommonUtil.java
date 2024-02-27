@@ -1,6 +1,7 @@
 package com.hzn.search.util;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.jsoup.Jsoup;
 
 /**
  * <p></p>
@@ -28,5 +29,9 @@ public class CommonUtil {
 			ip = request.getRemoteAddr ();
 		}
 		return ip;
+	}
+
+	public static String stripHtml (String html) {
+		return Jsoup.parse (html).text ();
 	}
 }
