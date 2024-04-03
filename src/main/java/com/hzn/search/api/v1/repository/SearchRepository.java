@@ -14,5 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository ("SearchRepository-v1")
 public interface SearchRepository extends JpaRepository<TbcmCmtyNttInfoEntity, Integer> {
-	List<TbcmCmtyNttInfoEntity> findTbcmCmtyNttInfoEntitiesByNttCnContainingIgnoreCaseOrNttSjContainingIgnoreCase (String nttCn, String nttSj, Pageable pageable);
+	List<TbcmCmtyNttInfoEntity> findAllByNttCnContainingIgnoreCaseOrNttSjContainingIgnoreCase (String nttCn, String nttSj, Pageable pageable);
+
+	long countByNttCnContainingIgnoreCaseOrNttSjContainingIgnoreCase (String nttCn, String nttSj);
 }

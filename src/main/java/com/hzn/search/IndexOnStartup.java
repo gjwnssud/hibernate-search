@@ -1,8 +1,12 @@
 package com.hzn.search;
 
+import com.hzn.search.entity.TbcmCmtyNttActLogEntity;
+import com.hzn.search.entity.TbcmCmtyNttAnswerDetailEntity;
 import com.hzn.search.entity.TbcmCmtyNttInfoEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import java.util.List;
+import org.hibernate.CacheMode;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.massindexing.MassIndexer;
 import org.hibernate.search.mapper.orm.session.SearchSession;
@@ -29,8 +33,9 @@ public class IndexOnStartup implements CommandLineRunner {
 	public void run (String... args) throws Exception {
 		if (hibernateSearchIndexInitialize) {
 			SearchSession searchSession = Search.session (entityManager);
-			MassIndexer massIndexer = searchSession.massIndexer (TbcmCmtyNttInfoEntity.class)
-			                                       .threadsToLoadObjects (Runtime.getRuntime ().availableProcessors () / 2);
+			List<Class<?>> classList = List.of (TbcmCmtyNttInfoEntity.class, TbcmCmtyNttAnswerDetailEntity.class, TbcmCmtyNttActLogEntity.class);
+			MassIndexer massIndexer = searchSession.massIndexer (classList).threadsToLoadObjects (Runtime.getRuntime ().availableProcessors ()).batchSizeToLoadObjects (25).typesToIndexInParallel (2)
+			                                       .purgeAllOnStart (true).dropAndCreateSchemaOnStart (true).cacheMode (CacheMode.IGNORE).idFetchSize (150).transactionTimeout (1800);
 			massIndexer.startAndWait ();
 		}
 	}

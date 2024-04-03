@@ -1,6 +1,10 @@
 package com.hzn.search.api.v1.service;
 
+import com.hzn.search.api.v1.repository.SearchActLogRepository;
+import com.hzn.search.api.v1.repository.SearchAnswerRepository;
 import com.hzn.search.api.v1.repository.SearchRepository;
+import com.hzn.search.entity.TbcmCmtyNttActLogEntity;
+import com.hzn.search.entity.TbcmCmtyNttAnswerDetailEntity;
 import com.hzn.search.entity.TbcmCmtyNttInfoEntity;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +23,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SearchService {
 	private final SearchRepository searchRepository;
+	private final SearchAnswerRepository searchAnswerRepository;
+	private final SearchActLogRepository searchActLogRepository;
 
 	public Page<TbcmCmtyNttInfoEntity> search (String keyword, Pageable pageable) {
-		List<TbcmCmtyNttInfoEntity> cmtyNttInfoEntityList = searchRepository.findTbcmCmtyNttInfoEntitiesByNttCnContainingIgnoreCaseOrNttSjContainingIgnoreCase (
-				keyword, keyword, pageable);
-		return new PageImpl<> (cmtyNttInfoEntityList, pageable, cmtyNttInfoEntityList.size ());
+		List<TbcmCmtyNttInfoEntity> cmtyNttInfoEntityList = searchRepository.findAllByNttCnContainingIgnoreCaseOrNttSjContainingIgnoreCase (keyword, keyword, pageable);
+		return new PageImpl<> (cmtyNttInfoEntityList, pageable, searchRepository.countByNttCnContainingIgnoreCaseOrNttSjContainingIgnoreCase (keyword, keyword));
+	}
+
+	public Page<TbcmCmtyNttAnswerDetailEntity> searchAnswer (String keyword, Pageable pageable) {
+		List<TbcmCmtyNttAnswerDetailEntity> tbcmCmtyNttAnswerDetailEntityList = searchAnswerRepository.findAllByNttAnswerCnContainingIgnoreCase (keyword, pageable);
+		return new PageImpl<> (tbcmCmtyNttAnswerDetailEntityList, pageable, searchAnswerRepository.countByNttAnswerCnContainingIgnoreCase (keyword));
+	}
+
+	public Page<TbcmCmtyNttActLogEntity> searchActLog (String keyword, Pageable pageable) {
+		List<TbcmCmtyNttActLogEntity> tbcmCmtyNttActLogEntityList = searchActLogRepository.findAllBySvcActCodeContainingIgnoreCase (keyword, pageable);
+		return new PageImpl<> (tbcmCmtyNttActLogEntityList, pageable, searchActLogRepository.countBySvcActCodeContainingIgnoreCase (keyword));
 	}
 }

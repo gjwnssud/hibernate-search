@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Hibernate-Search</title>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+<form id="searchForm" onsubmit="return false;">
+	<label>
+		<input type="text" id="keyword" name="keyword" onkeyup="if (event.keyCode === 13) search ()"/>
+	</label>
+	<label>
+		<select name="size">
+			<th:block th:each="num : ${#numbers.sequence(1, 5)}">
+				<option th:value="${num * 50}" th:text="${num * 50}"></option>
+			</th:block>
+		</select>
+	</label>
+	<label>
+		<input type="hidden" id="sort" name="sort" value="cmtyNttSn,DESC"/>
+	</label>
+	<label>
+		<input type="hidden" id="page" name="page" value="0"/>
+	</label>
+	<button type="button" onclick="search ()">검색</button>
+</form>
+<pre id="response">
+
+</pre>
+
+<form id="searchAnswerForm" onsubmit="return false;">
+	<label>
+		<input type="text" id="answerKeyword" name="keyword" onkeyup="if (event.keyCode === 13) searchAnswer ()"/>
+	</label>
+	<label>
+		<select name="size">
+			<th:block th:each="num : ${#numbers.sequence(1, 5)}">
+				<option th:value="${num * 50}" th:text="${num * 50}"></option>
+			</th:block>
+		</select>
+	</label>
+	<label>
+		<input type="hidden" id="answerSort" name="sort" value="cmtyNttAnswerSn,DESC"/>
+	</label>
+	<label>
+		<input type="hidden" id="answerPage" name="page" value="0"/>
+	</label>
+	<button type="button" onclick="searchAnswer ()">검색</button>
+</form>
+<pre id="answerResponse">
+
+</pre>
+
+<form id="searchActLogForm" onsubmit="return false;">
+	<label>
+		<input type="text" id="actKeyword" name="keyword" onkeyup="if (event.keyCode === 13) searchActLog ()"/>
+	</label>
+	<label>
+		<select name="size">
+			<th:block th:each="num : ${#numbers.sequence(1, 5)}">
+				<option th:value="${num * 50}" th:text="${num * 50}"></option>
+			</th:block>
+		</select>
+	</label>
+	<label>
+		<input type="hidden" id="actSort" name="sort" value="nttActLogSn,DESC"/>
+	</label>
+	<label>
+		<input type="hidden" id="actPage" name="page" value="0"/>
+	</label>
+	<button type="button" onclick="searchActLog ()">검색</button>
+</form>
+<pre id="actResponse">
+
+</pre>
+</body>
+
+<script>
+	function search () {
+		$.ajax ({
+	        url: "/api/v1/search/performance?" + $("#searchForm").serialize (),
+	        dataType: "json",
+	        type: "get",
+	        success: (response) => {
+		        $ ("#response").text (JSON.stringify (response, undefined, 2));
+	        }
+        });
+	}
+
+	function searchAnswer () {
+		$.ajax ({
+	        url: "/api/v1/search/answer/performance?" + $("#searchAnswerForm").serialize (),
+	        dataType: "json",
+	        type: "get",
+	        success: (response) => {
+		        $ ("#answerResponse").text (JSON.stringify (response, undefined, 2));
+	        }
+        });
+	}
+
+	function searchActLog () {
+		$.ajax ({
+	        url: "/api/v1/search/act/performance?" + $("#searchActLogForm").serialize (),
+	        dataType: "json",
+	        type: "get",
+	        success: (response) => {
+		        $ ("#actResponse").text (JSON.stringify (response, undefined, 2));
+	        }
+        });
+	}
+
+</script>
+</html>
