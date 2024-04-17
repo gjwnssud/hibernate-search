@@ -37,8 +37,8 @@ public class SearchController {
 
 	@Operation (summary = "게시글 검색")
 	@GetMapping
-	public ResponseEntity<Response<Page<TbcmCmtyNttInfoEntity>>> search (@RequestParam (defaultValue = "") String keyword,
-	                                                                     @PageableDefault (sort = {"cmtyNttSn"}, direction = Direction.DESC) @ParameterObject Pageable pageable) {
+	public ResponseEntity<Response<Page<TbcmCmtyNttInfoEntity>>> search (@RequestParam (defaultValue = "") String keyword, @PageableDefault (sort = {
+			"cmtyNttSn"}, direction = Direction.DESC) @ParameterObject Pageable pageable) {
 		return ResponseEntity.ok (Response.of (Status.OK, searchService.search (keyword, pageable)));
 	}
 
@@ -54,14 +54,14 @@ public class SearchController {
 
 	@Operation (summary = "답글 검색")
 	@GetMapping ("/answer")
-	public ResponseEntity<Response<Page<TbcmCmtyNttAnswerDetailEntity>>> searchAnswer (@RequestParam (defaultValue = "") String keyword,
-	                                                                                   @PageableDefault (sort = {"cmtyNttAnswerSn"}, direction = Direction.DESC) @ParameterObject Pageable pageable) {
+	public ResponseEntity<Response<Page<TbcmCmtyNttAnswerDetailEntity>>> searchAnswer (@RequestParam (defaultValue = "") String keyword, @PageableDefault (sort = {
+			"cmtyNttAnswerSn"}, direction = Direction.DESC) @ParameterObject Pageable pageable) {
 		return ResponseEntity.ok (Response.of (Status.OK, searchService.searchAnswer (keyword, pageable)));
 	}
 
 	@GetMapping ("/answer/performance")
-	public ResponseEntity<Response<Map<String, Object>>> searchAnswerPerformance (@RequestParam (defaultValue = "") String keyword,
-	                                                                              @PageableDefault (sort = {"cmtyNttAnswerSn"}, direction = Direction.DESC) Pageable pageable) {
+	public ResponseEntity<Response<Map<String, Object>>> searchAnswerPerformance (@RequestParam (defaultValue = "") String keyword, @PageableDefault (sort = {
+			"cmtyNttAnswerSn"}, direction = Direction.DESC) Pageable pageable) {
 		StopWatch stopWatch = new StopWatch ();
 		stopWatch.start ();
 		Page<TbcmCmtyNttAnswerDetailEntity> page = searchService.searchAnswer (keyword, pageable);
@@ -71,14 +71,14 @@ public class SearchController {
 
 	@Operation (summary = "사용자 활동 코드 검색")
 	@GetMapping ("/act")
-	public ResponseEntity<Response<Page<TbcmCmtyNttActLogEntity>>> searchActLog (@RequestParam (defaultValue = "") String keyword,
-	                                                                             @PageableDefault (sort = {"nttActLogSn"}, direction = Direction.DESC) @ParameterObject Pageable pageable) {
+	public ResponseEntity<Response<Page<TbcmCmtyNttActLogEntity>>> searchActLog (@RequestParam (defaultValue = "") String keyword, @PageableDefault (sort = {
+			"nttActLogSn"}, direction = Direction.DESC) @ParameterObject Pageable pageable) {
 		return ResponseEntity.ok (Response.of (Status.OK, searchService.searchActLog (keyword, pageable)));
 	}
 
 	@GetMapping ("/act/performance")
-	public ResponseEntity<Response<Map<String, Object>>> searchActLogPerformance (@RequestParam (defaultValue = "") String keyword,
-	                                                                              @PageableDefault (sort = {"nttActLogSn"}, direction = Direction.DESC) Pageable pageable) {
+	public ResponseEntity<Response<Map<String, Object>>> searchActLogPerformance (@RequestParam (defaultValue = "") String keyword, @PageableDefault (sort = {
+			"nttActLogSn"}, direction = Direction.DESC) Pageable pageable) {
 		StopWatch stopWatch = new StopWatch ();
 		stopWatch.start ();
 		Page<TbcmCmtyNttActLogEntity> page = searchService.searchActLog (keyword, pageable);

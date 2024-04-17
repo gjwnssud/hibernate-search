@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -27,9 +27,9 @@
     <logger level="off" name="jdbc.connection" additivity="false">
         <appender-ref ref="console"/>
     </logger>
-<!--    <logger level="trace" name="org.hibernate.type.descriptor.sql" additivity="false">-->
-<!--        <appender-ref ref="console"/>-->
-<!--    </logger>-->
+    <!--    <logger level="trace" name="org.hibernate.type.descriptor.sql" additivity="false">-->
+    <!--        <appender-ref ref="console"/>-->
+    <!--    </logger>-->
     <logger level="info" name="com.hzn.search" additivity="false">
         <appender-ref ref="console"/>
     </logger>

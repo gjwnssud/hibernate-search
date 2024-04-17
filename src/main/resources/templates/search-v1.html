@@ -79,35 +79,35 @@
 <script>
 	function search () {
 		$.ajax ({
-	        url: "/api/v1/search/performance?" + $("#searchForm").serialize (),
-	        dataType: "json",
-	        type: "get",
-	        success: (response) => {
-		        $ ("#response").text (JSON.stringify (response, undefined, 2));
-	        }
-        });
+			url : "/api/v1/search?" + $ ("#searchForm").serialize (),
+			dataType : "json",
+			type : "get",
+			success : (response) => {
+				$ ("#response").text (JSON.stringify (response, undefined, 2));
+			}
+		});
 	}
 
 	function searchAnswer () {
 		$.ajax ({
-	        url: "/api/v1/search/answer/performance?" + $("#searchAnswerForm").serialize (),
-	        dataType: "json",
-	        type: "get",
-	        success: (response) => {
-		        $ ("#answerResponse").text (JSON.stringify (response, undefined, 2));
-	        }
-        });
+			url : "/api/v1/search/answer?" + $ ("#searchAnswerForm").serialize (),
+			dataType : "json",
+			type : "get",
+			success : (response) => {
+				$ ("#answerResponse").text (JSON.stringify (response, undefined, 2));
+			}
+		});
 	}
 
 	function searchActLog () {
 		$.ajax ({
-	        url: "/api/v1/search/act/performance?" + $("#searchActLogForm").serialize (),
-	        dataType: "json",
-	        type: "get",
-	        success: (response) => {
-		        $ ("#actResponse").text (JSON.stringify (response, undefined, 2));
-	        }
-        });
+			url : "/api/v1/search/act?" + $ ("#searchActLogForm").serialize (),
+			dataType : "json",
+			type : "get",
+			success : (response) => {
+				$ ("#actResponse").text (JSON.stringify (response, undefined, 2));
+			}
+		});
 	}
 
 </script>

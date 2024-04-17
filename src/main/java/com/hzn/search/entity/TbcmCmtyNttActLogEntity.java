@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.search.engine.backend.types.Projectable;
+import org.hibernate.search.engine.backend.types.Searchable;
 import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.engine.backend.types.TermVector;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
@@ -62,7 +64,7 @@ public class TbcmCmtyNttActLogEntity {
 	private Integer prmbrshPgmSn;
 
 	@Column (name = "SVC_ACT_CODE")
-	@FullTextField (termVector = TermVector.YES, analyzer = "htmlStrippingAnalyzer")
+	@FullTextField (analyzer = "htmlStrippingAutocompleteAnalyzer", projectable = Projectable.YES)
 	private String svcActCode;
 
 	@Column (name = "SVC_ACT_REGIST_DT")

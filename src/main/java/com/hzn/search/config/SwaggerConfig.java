@@ -1,26 +1,18 @@
 package com.hzn.search.config;
 
-import com.hzn.search.dto.response.Response;
-import com.hzn.search.entity.TbcmCmtyNttInfoEntity;
 import com.hzn.search.enums.Status;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.media.IntegerSchema;
 import io.swagger.v3.oas.models.media.MediaType;
-import io.swagger.v3.oas.models.media.ObjectSchema;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
-import java.util.Map;
-import java.util.function.Consumer;
-import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.Page;
-import org.springframework.util.ObjectUtils;
 
 /**
  * <p></p>
@@ -32,15 +24,15 @@ import org.springframework.util.ObjectUtils;
 public class SwaggerConfig {
 	@Bean
 	public GroupedOpenApi openApiV1 () {
-		return GroupedOpenApi.builder ().group ("v1-definition").pathsToMatch ("/api/v1/**").addOpenApiCustomizer (
-				                     openApi -> openApi.info (new Info ().title ("Search API").description ("Search API 명세").version ("v1.0")))
+		return GroupedOpenApi.builder ().group ("v1-definition").pathsToMatch ("/api/v1/**")
+		                     .addOpenApiCustomizer (openApi -> openApi.info (new Info ().title ("Search API").description ("Search API 명세").version ("v1.0")))
 		                     .addOperationCustomizer (operationCustomizer ()).build ();
 	}
 
 	@Bean
 	public GroupedOpenApi openApiV2 () {
-		return GroupedOpenApi.builder ().group ("v2-definition").pathsToMatch ("/api/v2/**").addOpenApiCustomizer (
-				                     openApi -> openApi.info (new Info ().title ("Search API").description ("Search API 명세").version ("v2.0")))
+		return GroupedOpenApi.builder ().group ("v2-definition").pathsToMatch ("/api/v2/**")
+		                     .addOpenApiCustomizer (openApi -> openApi.info (new Info ().title ("Search API").description ("Search API 명세").version ("v2.0")))
 		                     .addOperationCustomizer (operationCustomizer ()).build ();
 	}
 
@@ -72,8 +64,7 @@ public class SwaggerConfig {
 				}
 
 				responses.addApiResponse (String.valueOf (code), new ApiResponse ().description (status.getMessage ()).content (
-						new Content ().addMediaType (org.springframework.http.MediaType.APPLICATION_JSON_VALUE,
-						                             new MediaType ().schema (commonResponse))));
+						new Content ().addMediaType (org.springframework.http.MediaType.APPLICATION_JSON_VALUE, new MediaType ().schema (commonResponse))));
 			}
 			return operation;
 		};

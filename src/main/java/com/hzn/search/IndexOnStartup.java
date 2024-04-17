@@ -33,9 +33,11 @@ public class IndexOnStartup implements CommandLineRunner {
 	public void run (String... args) throws Exception {
 		if (hibernateSearchIndexInitialize) {
 			SearchSession searchSession = Search.session (entityManager);
-			List<Class<?>> classList = List.of (TbcmCmtyNttInfoEntity.class, TbcmCmtyNttAnswerDetailEntity.class, TbcmCmtyNttActLogEntity.class);
-			MassIndexer massIndexer = searchSession.massIndexer (classList).threadsToLoadObjects (Runtime.getRuntime ().availableProcessors ()).batchSizeToLoadObjects (25).typesToIndexInParallel (2)
-			                                       .purgeAllOnStart (true).dropAndCreateSchemaOnStart (true).cacheMode (CacheMode.IGNORE).idFetchSize (150).transactionTimeout (1800);
+//			List<Class<?>> classList = List.of (TbcmCmtyNttInfoEntity.class, TbcmCmtyNttAnswerDetailEntity.class, TbcmCmtyNttActLogEntity.class);
+			List<Class<?>> classList = List.of (TbcmCmtyNttInfoEntity.class);
+			MassIndexer massIndexer = searchSession.massIndexer (classList).threadsToLoadObjects (Runtime.getRuntime ().availableProcessors ())
+			                                       .batchSizeToLoadObjects (25).typesToIndexInParallel (2).purgeAllOnStart (true).dropAndCreateSchemaOnStart (true)
+			                                       .cacheMode (CacheMode.IGNORE).idFetchSize (1000).transactionTimeout (1800);
 			massIndexer.startAndWait ();
 		}
 	}

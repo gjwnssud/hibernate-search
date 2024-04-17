@@ -9,8 +9,11 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.search.engine.backend.types.Projectable;
+import org.hibernate.search.engine.backend.types.Searchable;
 import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.engine.backend.types.TermVector;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FieldProjection;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
@@ -70,11 +73,11 @@ public class TbcmCmtyNttInfoEntity {
 	private Integer prmbrshPgmSn;
 
 	@Column (name = "NTT_SJ")
-	@FullTextField (termVector = TermVector.YES, analyzer = "htmlStrippingAnalyzer")
+	@FullTextField (analyzer = "htmlStrippingAutocompleteAnalyzer", projectable = Projectable.YES)
 	private String nttSj;
 
 	@Column (name = "NTT_CN")
-	@FullTextField (termVector = TermVector.YES, analyzer = "htmlStrippingAnalyzer")
+	@FullTextField (analyzer = "htmlStrippingAutocompleteAnalyzer", projectable = Projectable.YES)
 	private String nttCn;
 
 	@Column (name = "NTT_REGIST_DT")

@@ -1,5 +1,9 @@
 package com.hzn.search.config;
 
+import org.apache.lucene.analysis.charfilter.HTMLStripCharFilterFactory;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.ngram.NGramFilterFactory;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.hibernate.search.backend.lucene.analysis.LuceneAnalysisConfigurationContext;
 import org.hibernate.search.backend.lucene.analysis.LuceneAnalysisConfigurer;
 
@@ -12,6 +16,7 @@ import org.hibernate.search.backend.lucene.analysis.LuceneAnalysisConfigurer;
 public class CustomLuceneAnalysisConfigure implements LuceneAnalysisConfigurer {
 	@Override
 	public void configure (LuceneAnalysisConfigurationContext context) {
-		context.analyzer ("htmlStrippingAnalyzer").custom ().tokenizer ("standard").tokenFilter ("lowercase").charFilter ("htmlStrip");
+		context.analyzer ("htmlStrippingAutocompleteAnalyzer").custom ().tokenizer (StandardTokenizerFactory.class).charFilter (HTMLStripCharFilterFactory.class)
+		       .tokenFilter (LowerCaseFilterFactory.class).tokenFilter (NGramFilterFactory.class).param ("minGramSize", "2").param ("maxGramSize", "10");
 	}
 }
