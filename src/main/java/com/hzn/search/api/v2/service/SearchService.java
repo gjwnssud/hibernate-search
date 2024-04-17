@@ -7,6 +7,7 @@ import com.hzn.search.util.CommonUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import org.hibernate.search.engine.search.query.SearchResult;
 import org.hibernate.search.engine.search.sort.dsl.CompositeSortComponentsStep;
@@ -81,7 +82,7 @@ public class SearchService {
 					                    result = result.substring (0, spacePos);
 				                    }
 				                    return result;
-			                    }).distinct ().sorted ().toList ();
+			                    }).distinct ().sorted (Comparator.comparingInt (String::length)).toList ();
 		} else {
 			return null;
 		}
