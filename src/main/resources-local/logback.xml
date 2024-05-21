@@ -9,10 +9,10 @@
         </encoder>
     </appender>
 
-    <logger level="info" name="jdbc.sqltiming" additivity="false">
+    <logger level="off" name="jdbc.sqltiming" additivity="false">
         <appender-ref ref="console"/>
     </logger>
-    <logger level="info" name="jdbc.resultsettable" additivity="false">
+    <logger level="off" name="jdbc.resultsettable" additivity="false">
         <appender-ref ref="console"/>
     </logger>
     <logger level="off" name="jdbc.audit" additivity="false">
