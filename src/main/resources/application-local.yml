@@ -1,0 +1,12 @@
+# spring configuration
+spring:
+    datasource:
+        url: jdbc:mysql://localhost:3306/SEARCH?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&useLegacyDatetimeCode=false&autoReconnect=true&allowMultiQueries=true
+        username: hzn
+        password: 1q2w3e!@
+        hikari:
+            maximum-pool-size: 5
+    jpa:
+        show-sql: false
+        hibernate:
+            ddl-auto: update

@@ -1,0 +1,40 @@
+# server configuration
+server:
+    port: 8081
+    shutdown: graceful
+
+# spring configuration
+spring:
+    application:
+        name: hibernate-search
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        hikari:
+            connection-timeout: 8000
+            validation-timeout: 10000
+            max-lifetime: 298000
+    jpa:
+        properties:
+            hibernate:
+                format_sql: true
+                search:
+                    backend:
+                        directory:
+                            root: ${user.home}/work/indexed-data/mysql-local
+                    automatic_indexing:
+                        strategy: session # Entity Manager 트랜잭션 커밋 or 플러시 발생시 자동 인덱싱
+#                    configuration_property_checking:
+#                        strategy: ignore
+#                    index:
+#                        initialize: true
+        open-in-view: false
+        hibernate:
+            naming:
+                physical-strategy: com.hzn.search.config.UpperCasePhysicalNamingStrategy
+
+# application configuration
+cors:
+    allowed:
+        origins: "*"
+        headers: Access-Control-Allow-Headers, Authorization, Origin, X-Requested-With, Content-PaymentType, Content-Disposition, Accept
+        methods: GET, POST, PUT, PATCH, DELETE, OPTIONS
