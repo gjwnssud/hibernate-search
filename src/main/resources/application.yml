@@ -19,10 +19,14 @@ spring:
                 format_sql: true
                 search:
                     backend:
+                        lucene_version: LATEST
                         directory:
                             root: ${user.home}/work/indexed-data/mysql-local
-                    automatic_indexing:
-                        strategy: session # Entity Manager 트랜잭션 커밋 or 플러시 발생시 자동 인덱싱
+                        analysis:
+                            configurer: com.hzn.search.config.CustomLuceneAnalysisConfigurer
+                    indexing:
+                        listeners:
+                            enabled: true # 트랜잭션이 커밋될 때 자동 인덱싱
 #                    configuration_property_checking:
 #                        strategy: ignore
 #                    index:
@@ -36,5 +40,5 @@ spring:
 cors:
     allowed:
         origins: "*"
-        headers: Access-Control-Allow-Headers, Authorization, Origin, X-Requested-With, Content-PaymentType, Content-Disposition, Accept
+        headers: "*"
         methods: GET, POST, PUT, PATCH, DELETE, OPTIONS

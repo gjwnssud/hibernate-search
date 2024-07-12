@@ -3,6 +3,8 @@ package com.hzn.search.service;
 import com.hzn.search.entity.TbcmCmtyNttInfoEntity;
 import com.hzn.search.repository.TbcmCmtyNttInfoRepository;
 import jakarta.persistence.EntityManager;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
@@ -50,12 +52,36 @@ public class TbcmCmtyNttInfoService {
 	}
 
 	@Transactional (readOnly = true)
-	public List<String> suggestKeywords (String keyword) {
+	public List<String> suggestKeywords (String keyword) throws IOException {
 		SearchSession searchSession = Search.session (entityManager);
 		List<TbcmCmtyNttInfoEntity> tbcmCmtyNttInfoEntities = searchSession.search (TbcmCmtyNttInfoEntity.class)
-		                                                                   .where (f -> f.wildcard ().fields ("nttSj", "nttCn").matching (keyword + "*")).fetchHits (20);
+		                                                                   .where (f -> f.simpleQueryString ().fields ("nttSj", "nttCn").matching (keyword))
+		                                                                   .fetchHits (20);
 		return Stream.concat (tbcmCmtyNttInfoEntities.stream ().map (TbcmCmtyNttInfoEntity::getNttSj),
-		                      tbcmCmtyNttInfoEntities.stream ().map (TbcmCmtyNttInfoEntity::getNttCn)).sorted ().toList ();
+		                      tbcmCmtyNttInfoEntities.stream ().map (TbcmCmtyNttInfoEntity::getNttCn)).map (this::removeHtmlTagsAndLinks)
+		             .flatMap (s -> Arrays.stream (s.split ("\\s+"))).filter (s -> s.toLowerCase ().contains (keyword.toLowerCase ())) // 키워드가 포함된 단어 필터링
+		             .map (this::extractCharacter).distinct ().sorted ().toList ();
+
+		// Access the Lucene IndexReader using LuceneExtension
+//		IndexReader indexReader = searchSession.scope(TbcmCmtyNttInfoEntity.class)
+//		                                       .extension(LuceneExtension.get())
+//		                                       .openIndexReader();
+//
+//		List<String> suggestions = new ArrayList<> ();
+//		for (String field : new String[]{"nttSj", "nttCn"}) {
+//			Terms terms = MultiFields.getTerms(indexReader, field);
+//			if (terms != null) {
+//				TermsEnum termsEnum = terms.iterator();
+//				while (termsEnum.next() != null) {
+//					String term = termsEnum.term().utf8ToString();
+//					if (term.contains(keyword)) {
+//						suggestions.add(term);
+//					}
+//				}
+//			}
+//		}
+//
+//		return suggestions.stream().distinct().sorted().collect(Collectors.toList());
 	}
 
 	public TbcmCmtyNttInfoEntity findById (Long id) {
@@ -85,5 +111,13 @@ public class TbcmCmtyNttInfoService {
 					order.isAscending () ? searchSortFactory.field (order.getProperty ()).asc () : searchSortFactory.field (order.getProperty ()).desc ());
 		}
 		return sortStep;
+	}
+
+	private String removeHtmlTagsAndLinks (String input) {
+		return input.replaceAll ("<[^>]*>", "").replaceAll ("\\b(?:https?://|www\\.)\\S+\\b", "");
+	}
+
+	private String extractCharacter (String input) {
+		return input.replaceAll ("[^a-zA-Z가-힣]", "");
 	}
 }

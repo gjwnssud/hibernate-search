@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
-    <property name="serviceLogFilePath" value="/app/hzn-framework/logs"/>
+    <property name="serviceLogFilePath" value="/app/search/logs"/>
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -32,7 +32,7 @@
 <!--        <logger level="trace" name="org.hibernate.orm.jdbc.bind" additivity="false">-->
 <!--            <appender-ref ref="console"/>-->
 <!--        </logger>-->
-        <logger level="info" name="com.themoonenter.site" additivity="false">
+        <logger level="info" name="com.hzn.search" additivity="false">
             <appender-ref ref="console"/>
         </logger>
 
@@ -58,7 +58,7 @@
             </encoder>
         </appender>
 
-        <logger level="info" name="com.hzn.framework" additivity="false">
+        <logger level="info" name="com.hzn.search" additivity="false">
             <appender-ref ref="service"/>
             <appender-ref ref="console"/>
         </logger>
@@ -86,7 +86,7 @@
             </encoder>
         </appender>
 
-        <logger level="info" name="com.hzn.framework" additivity="false">
+        <logger level="info" name="com.hzn.search" additivity="false">
             <appender-ref ref="service"/>
             <appender-ref ref="console"/>
         </logger>

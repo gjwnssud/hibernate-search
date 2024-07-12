@@ -1,5 +1,6 @@
 package com.hzn.search.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hzn.search.enums.Status;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
+@JsonInclude (JsonInclude.Include.NON_NULL)
 @Schema (title = "공통 응답 객체", name = "CommonResponse")
 public class Response<T> {
 	@Schema (title = "응답 코드", example = "200")
@@ -24,6 +26,10 @@ public class Response<T> {
 
 	public static <T> Response<T> of (int code, String message) {
 		return of (code, message, null);
+	}
+
+	public static <T> Response<T> of (T data) {
+		return of (Status.OK, data);
 	}
 
 	public static <T> Response<T> of (Status status) {

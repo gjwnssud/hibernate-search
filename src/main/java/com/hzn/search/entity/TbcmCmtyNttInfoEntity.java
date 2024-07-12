@@ -70,11 +70,13 @@ public class TbcmCmtyNttInfoEntity {
 	private Integer prmbrshPgmSn;
 
 	@Column (name = "NTT_SJ")
-	@FullTextField (analyzer = "standard")
+//	@FullTextField (analyzer = "standard")
+	@FullTextField (analyzer = "ngram_analyzer")
 	private String nttSj;
 
 	@Column (name = "NTT_CN")
-	@FullTextField (analyzer = "standard")
+//	@FullTextField (analyzer = "standard")
+	@FullTextField (analyzer = "ngram_analyzer")
 	private String nttCn;
 
 	@Column (name = "NTT_REGIST_DT")
